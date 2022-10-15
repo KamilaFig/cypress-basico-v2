@@ -257,5 +257,30 @@ describe('Central de Atendimento ao Cliente TAT', function(){
 
     cy.contains('Talking About Testing').should('be.visible')
   })
-  
+
+  it('show and hide success and error messages using .invoke', function(){
+    cy.get('.success')
+      .should('not.be.visible')
+      .invoke('show')
+      .should('be.visible')
+      .and('contain', 'Mensagem enviada com sucesso.')
+      .invoke('hide')
+      .should('not.be.visible')
+    cy.get('.error')
+      .should('not.be.visible')
+      .invoke('show')
+      .should('be.visible')
+      .and('contain', 'Valide os campos obrigatórios!')
+      .invoke('hide')
+      .should('not.be.visible')
+  })
+
+  it('Fill the text area using the invoke command', function(){
+    //Creating a long text and put it on the variable, the test will do a "CTRL+V" of the text.
+    const longText = Cypress._.repeat('I am testing, ', 20)
+
+    cy.get('#open-text-area')
+      .invoke('val', longText)
+      .should('have.value', longText)
+  })
 })

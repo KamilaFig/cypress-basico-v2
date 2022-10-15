@@ -244,12 +244,12 @@ describe('Central de Atendimento ao Cliente TAT', function(){
       })      
   })
 
-  it('Verify that the privacy policy opens in another tab without the need for a click', function(){
+  it('verify that the privacy policy opens in another tab without the need for a click', function(){
     //Lesson 07: Links that open in another tab
     cy.get('#privacy a').should('have.attr', 'target', '_blank')
   })
 
-  it('Access the privacy policy page by removing the target and clicking the link', function(){
+  it('access the privacy policy page by removing the target and clicking the link', function(){
     //Lesson 07: Extra exercise 1: Removing target
     cy.get('#privacy a')
       .invoke('removeAttr', 'target')
@@ -275,7 +275,7 @@ describe('Central de Atendimento ao Cliente TAT', function(){
       .should('not.be.visible')
   })
 
-  it('Fill the text area using the invoke command', function(){
+  it('fill the text area using the invoke command', function(){
     //Creating a long text and put it on the variable, the test will do a "CTRL+V" of the text.
     const longText = Cypress._.repeat('I am testing, ', 20)
 
@@ -284,7 +284,7 @@ describe('Central de Atendimento ao Cliente TAT', function(){
       .should('have.value', longText)
   })
 
-  it('Make a HTTP request', function(){
+  it('make a HTTP request', function(){
     cy.request('https://cac-tat.s3.eu-central-1.amazonaws.com/index.html')
       .should(function(response){
         const{ status, statusText, body} = response
@@ -292,5 +292,15 @@ describe('Central de Atendimento ao Cliente TAT', function(){
         expect(statusText).to.equal('OK')
         expect(body).to.include('CAC TAT')
       })
+  })
+
+  it('find the hidden cat', function(){
+    cy.get('#cat')
+      .invoke('show')
+      .should('be.visible')
+    cy.get('#title')
+      .invoke('text', 'CAT TAT')
+    cy.get('#subtitle')
+      .invoke('text', 'I LOVE CATS')
   })
 })

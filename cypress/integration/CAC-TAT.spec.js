@@ -1,6 +1,7 @@
 /// <reference types="Cypress" />
 
 describe('Central de Atendimento ao Cliente TAT', function(){
+  const THREE_SECONDS_IN_MS = 3000
 
   beforeEach(() => {
     cy.visit('./src/index.html')
@@ -14,6 +15,8 @@ describe('Central de Atendimento ao Cliente TAT', function(){
     // Extra exercise 1: Creating a varible to type a long text on the open-text-area field.
     const longText = 'I am learning to automate with Cypress. I am learning to automate with Cypress. I am learning to automate with Cypress. I am learning to automate with Cypress.'
     
+    cy.clock()
+
     cy.get('#firstName')
       .type('Kamila')
       .should('have.value', 'Kamila')
@@ -33,10 +36,16 @@ describe('Central de Atendimento ao Cliente TAT', function(){
     cy.contains('button', 'Enviar').click()
 
     cy.get('.success').should('be.visible')
+
+    cy.tick(THREE_SECONDS_IN_MS)
+
+    cy.get('.success').should('not.be.visible')
    })
 
   it('show error message when submitting the form with an invalid email format', function(){
     // Extra exercise 2: Error class
+    cy.clock()
+
     cy.get('#firstName')
       .type('Kamila')
       .should('have.value', 'Kamila')
@@ -56,6 +65,10 @@ describe('Central de Atendimento ao Cliente TAT', function(){
     cy.contains('button', 'Enviar').click()
 
     cy.get('.error').should('be.visible')
+
+    cy.tick(THREE_SECONDS_IN_MS)
+
+    cy.get('.error').should('not.be.visible')
   })
 
   it('phone field is empty when they has no numeric value', function(){
@@ -68,6 +81,9 @@ describe('Central de Atendimento ao Cliente TAT', function(){
 
   it('show error message when phone field becomes mandatory but not filled when submitting form', function(){
     // Extra exercise 4: Error when phone required field is not filled.
+
+    cy.clock()
+
     cy.get('#firstName')
       .type('Kamila')
       .should('have.value', 'Kamila')
@@ -90,6 +106,10 @@ describe('Central de Atendimento ao Cliente TAT', function(){
     cy.contains('button', 'Enviar').click()
 
     cy.get('.error').should('be.visible')
+
+    cy.tick(THREE_SECONDS_IN_MS)
+
+    cy.get('.error').should('not.be.visible')
   })
 
   it('fills and clears the nome, sobrenome, email and telefone fields', function(){
@@ -121,16 +141,30 @@ describe('Central de Atendimento ao Cliente TAT', function(){
 
   it('show error message when submitting form with empty required fields.', function(){
     // Extra exercise 6: Error when all required fields are not filled.
+
+    cy.clock()
+
     cy.contains('button', 'Enviar').click()
 
     cy.get('.error').should('be.visible')
+
+    cy.tick(THREE_SECONDS_IN_MS)
+
+    cy.get('.error').should('not.be.visible')
   })
 
   it('submit the form successfully using custom commands.', function(){
     // Extra exercise 7: Custom commands.
+
+    cy.clock()
+
     cy.fillMandatoryFieldsAndSubmit()
     
     cy.get('.success').should('be.visible')
+
+    cy.tick(THREE_SECONDS_IN_MS)
+
+    cy.get('.success').should('not.be.visible')
   })
 
   it('select a product (Youtube) by text', function(){
